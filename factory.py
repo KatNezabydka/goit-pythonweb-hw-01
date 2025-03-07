@@ -1,44 +1,50 @@
+from abc import ABC, abstractmethod
+import logging
+
+
 class Car:
-    def __init__(self, make, model, spec):
+    def __init__(self, make: str, model: str, spec: str) -> None:
         self.make = make
         self.model = model
         self.spec = spec
 
-    def start_engine(self):
-        print(f"{self.make} {self.model} ({self.spec}): Двигун запущено")
+    def start_engine(self) -> None:
+        logging.info(f"{self.make} {self.model} ({self.spec}): Двигун запущено")
 
 
 class Motorcycle:
-    def __init__(self, make, model, spec):
+    def __init__(self, make: str, model: str, spec: str) -> None:
         self.make = make
         self.model = model
         self.spec = spec
 
-    def start_engine(self):
-        print(f"{self.make} {self.model} ({self.spec}): Мотор заведено")
+    def start_engine(self) -> None:
+        logging.info(f"{self.make} {self.model} ({self.spec}): Мотор заведено")
 
 
-class VehicleFactory:
-    def create_car(self, make, model):
-        raise NotImplementedError
+class VehicleFactory(ABC):
+    @abstractmethod
+    def create_car(self, make: str, model: str) -> Car:
+        pass
 
-    def create_motorcycle(self, make, model):
-        raise NotImplementedError
+    @abstractmethod
+    def create_motorcycle(self, make: str, model: str) -> Motorcycle:
+        pass
 
 
 class USVehicleFactory(VehicleFactory):
-    def create_car(self, make, model):
+    def create_car(self, make: str, model: str) -> Car:
         return Car(make, model, "US Spec")
 
-    def create_motorcycle(self, make, model):
+    def create_motorcycle(self, make: str, model: str) -> Motorcycle:
         return Motorcycle(make, model, "US Spec")
 
 
 class EUVehicleFactory(VehicleFactory):
-    def create_car(self, make, model):
+    def create_car(self, make: str, model: str) -> Car:
         return Car(make, model, "EU Spec")
 
-    def create_motorcycle(self, make, model):
+    def create_motorcycle(self, make: str, model: str) -> Motorcycle:
         return Motorcycle(make, model, "EU Spec")
 
 
